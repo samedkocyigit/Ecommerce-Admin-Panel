@@ -10,23 +10,23 @@
 
     <!-- Create Modal-->
     <CreateModal
-      v-if="createCategoryStatus"
+      v-if="createSliderStatus"
       @done="modalToggle"
       @close="closeModals"
     ></CreateModal>
 
     <!-- Delete Modal-->
     <DeleteModal
-      v-if="deleteCategoryStatus"
-      :category="category"
+      v-if="deleteSliderStatus"
+      :slider="slider"
       @done="modalToggle"
       @close="closeModals"
     ></DeleteModal>
 
     <!-- Update Modal-->
     <UpdateModal
-      v-if="updateCategoryStatus"
-      :category="category"
+      v-if="updateSliderStatus"
+      :slider="slider"
       @done="modalToggle"
       @close="closeModals"
     ></UpdateModal>
@@ -36,8 +36,8 @@
       <!-- Top Bar -->
       <TopBar></TopBar>
 
-      <!-- Category List -->
-      <CategoryList @showModal="showModal" />
+      <!-- Slider List -->
+      <SliderList @showModal="showModal" />
     </div>
     <!-- Main End -->
   </div>
@@ -46,20 +46,20 @@
 <script>
 import { mapGetters } from 'vuex';
 import TopBar from '../components/TopBar.vue';
-import CategoryList from '../components/category-branches/CategoryList.vue';
-import CreateModal from '../components/category-branches/CreateModal.vue';
-import DeleteModal from '../components/category-branches/DeleteModal.vue';
-import UpdateModal from '../components/category-branches/UpdateModal.vue';
+import SliderList from '../components/slider-branches/SliderList.vue';
+import CreateModal from '../components/slider-branches/CreateModal.vue';
+import DeleteModal from '../components/slider-branches/DeleteModal.vue';
+import UpdateModal from '../components/slider-branches/UpdateModal.vue';
 import axios from 'axios';
 
 export default {
-  name: 'CategoryPage',
+  name: 'SliderPage',
   data() {
     return {
       /* Status For Show Associated Modal Or Not */
-      createCategoryStatus: false,
-      updateCategoryStatus: false,
-      deleteCategoryStatus: false,
+      createSliderStatus: false,
+      updateSliderStatus: false,
+      deleteSliderStatus: false,
 
       /* Validation Message Status For Input Of Modal */
       createError: false,
@@ -69,62 +69,62 @@ export default {
       toastStatus: false,
       toastMessage: '',
 
-      category: null,
+      slider: null,
     };
   },
-  components: { TopBar, CategoryList, CreateModal, DeleteModal, UpdateModal },
+  components: { TopBar, SliderList, CreateModal, DeleteModal, UpdateModal },
   computed: {
     ...mapGetters(['getToggleStatus']),
   },
   methods: {
     /* Show Modal */
     async showModal(status, id) {
-      /* Choose Category To Show On Modal */
+      /* Choose Slider To Show On Modal */
       if (id !== null) {
-        await this.takeACategory(id);
+        await this.takeASlider(id);
       }
 
       this.modalToggle(status);
     },
 
-    /* Delete Category */
-    deleteChosenCategory(id) {
-      this.deleteCategory(id);
+    /* Delete Slider */
+    deleteChosenSlider(id) {
+      this.deleteSlider(id);
       this.modalToggle('delete');
 
-      this.toastMessage = 'Delete category success. ';
+      this.toastMessage = 'Delete Slider success. ';
       setTimeout(() => (this.toastStatus = true), 1000);
       setTimeout(() => (this.toastStatus = false), 3000);
       return;
     },
 
-    /* Update Category */
-    async updateChosenCategory(categoryId, categoryTitle) {
-      if (this.categoryTitle === '') {
+    /* Update Slider */
+    async updateChosenSlider(SliderId, SliderTitle) {
+      if (this.SliderTitle === '') {
         this.updateError = true;
         return;
       }
 
-      let newCategory = {
-        id: categoryId,
-        title: categoryTitle,
+      let newSlider = {
+        id: SliderId,
+        title: SliderTitle,
       };
 
-      await this.updateCategory(newCategory);
+      await this.updateSlider(newSlider);
       this.getProducts.forEach((product) => {
-        this.getCategories.forEach((category) => {
+        this.getSliders.forEach((Slider) => {
           if (
-            product.category_id === category.id &&
-            product.category_title !== category.title
+            product.Slider_id === Slider.id &&
+            product.Slider_title !== Slider.title
           ) {
-            product.category_title = category.title;
+            product.Slider_title = Slider.title;
           }
         });
       });
-      this.changeCategoryTitleOfProduct(this.getProducts);
+      this.changeSliderTitleOfProduct(this.getProducts);
       this.modalToggle('update');
 
-      this.toastMessage = 'Update category success. ';
+      this.toastMessage = 'Update Slider success. ';
       setTimeout(() => (this.toastStatus = true), 1000);
       setTimeout(() => (this.toastStatus = false), 3000);
     },
@@ -132,15 +132,15 @@ export default {
     /* To Open and Close Modal */
     modalToggle(status) {
       if (status === 'create') {
-        this.createCategoryStatus = !this.createCategoryStatus;
+        this.createSliderStatus = !this.createSliderStatus;
         this.clearValidationMessage();
         return;
       } else if (status === 'update') {
-        this.updateCategoryStatus = !this.updateCategoryStatus;
+        this.updateSliderStatus = !this.updateSliderStatus;
         this.clearValidationMessage();
         return;
       } else if (status === 'delete') {
-        this.deleteCategoryStatus = !this.deleteCategoryStatus;
+        this.deleteSliderStatus = !this.deleteSliderStatus;
         return;
       } else {
         let statusArr = status.split('-');
@@ -151,25 +151,21 @@ export default {
       }
     },
 
-    /* Clear Validation Message */
     clearValidationMessage() {
       this.createError = false;
       this.updateError = false;
     },
 
-    /* Close all Categoy Modal */
     closeModals() {
-      this.createCategoryStatus = false;
-      this.updateCategoryStatus = false;
-      this.deleteCategoryStatus = false;
+      this.createSliderStatus = false;
+      this.updateSliderStatus = false;
+      this.deleteSliderStatus = false;
     },
 
-    /* Take a category */
-    async takeACategory(id) {
-      let { data } = await axios.get(
-        `http://127.0.0.1:3000/api/categories/${id}`,
-      );
-      this.category = data.data.category;
+    /* Take a Slider */
+    async takeASlider(id) {
+      let { data } = await axios.get(`http://127.0.0.1:3000/api/sliders/${id}`);
+      this.slider = data.data.Slider;
     },
   },
 };

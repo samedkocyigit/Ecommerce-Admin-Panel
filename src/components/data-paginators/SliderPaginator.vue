@@ -61,7 +61,7 @@
 
 <script>
 export default {
-  name: 'CategoryPaginator',
+  name: 'SliderPaginator',
   props: {
     currentPage: {
       /* Current Page */ type: Number,
@@ -124,27 +124,27 @@ export default {
   methods: {
     /* Go To The First Page */
     onClickFirstPage() {
-      this.$emit('categoryPageChanged', 1);
+      this.$emit('sliderPageChanged', 1);
     },
 
     /* Go To The Last Page */
     onClickLastPage() {
-      this.$emit('categoryPageChanged', this.totalPages);
+      this.$emit('sliderPageChanged', this.totalPages);
     },
 
     /* Go To The Previous Page */
     onClickPreviousPage() {
-      this.$emit('categoryPageChanged', this.currentPage - 1);
+      this.$emit('sliderPageChanged', this.currentPage - 1);
     },
 
     /* Go To The Next Page */
     onClickNextPage() {
-      this.$emit('categoryPageChanged', this.currentPage + 1);
+      this.$emit('sliderPageChanged', this.currentPage + 1);
     },
 
     /* Go To The Page That Represent Button */
     onClickPage(page) {
-      this.$emit('categoryPageChanged', page);
+      this.$emit('sliderPageChanged', page);
     },
 
     /* Is Page Active Or Not */

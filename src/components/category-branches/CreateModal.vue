@@ -36,7 +36,7 @@ export default {
             }
 
             let newCategory = {
-                "title": categoryTitle
+                "category_name": categoryTitle
             }
             
             this.createCategory(newCategory);

@@ -3,7 +3,7 @@
        <div class="modal-box-two">
          <Modal @close="$emit('close')">
            <h4>Do you really want to delete {{ user.name }} account permanantly?</h4>
-           <button @click="deleteUserAccount(user.id)">Delete</button>
+           <button @click="deleteUserAccount(user._id)">Delete</button>
            <button @click="$emit('close')">Cancel</button>
          </Modal>
        </div>

@@ -8,7 +8,9 @@ module.exports = {
     'eslint:recommended'
   ],
   parserOptions: {
-    parser: '@babel/eslint-parser'
+    ecmaVersion: 2020, // veya ihtiyaç duyduğunuz sürüm
+    sourceType: 'module',
+    requireConfigFile: false, // Babel config dosyası gereksinimini devre dışı bırak
   },
   rules: {
     'no-console': process.env.NODE_ENV === 'production' ? 'warn' : 'off',

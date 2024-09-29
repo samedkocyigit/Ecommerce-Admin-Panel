@@ -14,8 +14,8 @@
                 <td class="phone" >{{ admin.phone }}</td>
                 <td class="date" >{{ admin.createdAt }}</td>
                 <td class="control btns" >
-                    <button @click="$emit('showModal', 'role', admin.id)" title="Remove from admin List"><i class="fa-solid fa-minus"></i></button>
-                    <button @click="$emit('showModal', 'detail', admin.id)" title="details"><i class="fa-solid fa-info"></i></button>
+                    <button @click="$emit('showModal', 'role', admin._id)" title="Remove from admin List"><i class="fa-solid fa-minus"></i></button>
+                    <button @click="$emit('showModal', 'detail', admin._id)" title="details"><i class="fa-solid fa-info"></i></button>
                 </td>
             </tr>
         </table>
@@ -39,7 +39,7 @@
         },
         components: { Paginator },
         computed: {
-            ...mapGetters([ "getAdmins", "paginatedAdmins", "getAdminCurrentPage" ]),
+            ...mapGetters('Users',[ "getAdmins", "paginatedAdmins", "getAdminCurrentPage" ]),
         },
         methods: {
             onAdminPageChange(currentPage){

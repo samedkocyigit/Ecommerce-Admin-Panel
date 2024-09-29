@@ -1,36 +1,36 @@
 <template>
-    <div class="category-box">
-        <header v-if="getCategories">
-            <h1>Category</h1>
-            <button @click="$emit('showModal', 'create', null)">Create Category</button>
+    <div class="slider-box">
+        <header v-if="getSliders">
+            <h1>Slider</h1>
+            <button @click="$emit('showModal', 'create', null)">Create Slider</button>
         </header>
-        <div v-if="getCategories">
-            <ul v-if="getCategories.length !== 0">
-                <li v-for="(category, index) in paginatedCategories" :key="index">
-                    <h3>{{ category.category_name }}</h3>
+        <div v-if="getSliders">
+            <ul v-if="getSliders.length !== 0">
+                <li v-for="(slider, index) in paginatedSliders" :key="index">
+                    <h3>{{ slider.name }}</h3>
                     <div class="btn-box">
-                        <button @click="$emit('showModal', 'update', category._id)">Edit Category</button>
-                        <button @click="$emit('showModal', 'delete', category._id)">Delete Category</button>
+                        <button @click="$emit('showModal', 'update', slider._id)">Edit Slider</button>
+                        <button @click="$emit('showModal', 'delete', slider._id)">Delete Slider</button>
                     </div>
                 </li>
             </ul>
             <div class="noData" v-else>
-                <h1>There is no category here.</h1>
+                <h1>There is no sliders here.</h1>
             </div>
         </div>
         <div class="noData" v-else>
             <h1>Loading</h1>
         </div>
-        <Paginator v-if="getCategories && getCategories.length > perPage" @categoryPageChanged="onCategorytPageChange" :currentPage="currentPage" :totalPages=Math.ceil(getCategories.length/perPage) :perPage="perPage" :maxVisibleButton="maxVisibleButton"></Paginator>
+        <Paginator v-if="getSliders && getSliders.length > perPage" @sliderPageChanged="onSliderPageChange" :currentPage="currentPage" :totalPages=Math.ceil(getSliders.length/perPage) :perPage="perPage" :maxVisibleButton="maxVisibleButton"></Paginator>
     </div>
 </template>
 
 <script>
 import { mapGetters, mapActions } from 'vuex';
-import Paginator from "../data-paginators/CategoryPaginator.vue";
+import Paginator from "../data-paginators/SliderPaginator.vue";
 
 export default {
-    name: "CategoryList",
+    name: "SliderList",
     data () {
         return {
             currentPage: 1,
@@ -40,28 +40,27 @@ export default {
         },
     components: { Paginator },
     computed: {
-        ...mapGetters("Categories", ["getCategories", "paginatedCategories", "getCategoryCurrentPage"]),
+        ...mapGetters("Sliders", ["getSliders", "paginatedSliders", "getSliderCurrentPage"]),
     },
     methods: {
-        ...mapActions("Categories", ["categoryPaginator"]),
-        onCategorytPageChange(currentPage){
+        ...mapActions("Sliders", ["sliderPaginator"]),
+        onSliderPageChange(currentPage){
             this.currentPage = currentPage;
             let page = {
                 currentPage: this.currentPage,
                 perPage: this.perPage
             }
-            this.categoryPaginator(page);
+            this.sliderPaginator(page);
         },
     },
     mounted () {
-        this.currentPage=this.getCategoryCurrentPage;
+        this.currentPage=this.getSliderCurrentPage;
     }
-    
 }
 </script>
 
 <style scoped>
-    .category-box{
+    .slider-box{
         height: 100%;
     }
     ul, header{

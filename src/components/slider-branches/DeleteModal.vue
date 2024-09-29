@@ -1,15 +1,15 @@
 <template>
-  <!-- Category Create Modal -->
+  <!-- Slider Create Modal -->
   <div class="delete-modal">
     <Modal @close="$emit('close')">
       <h4>Do you really want to delete permanantly?</h4>
       <div class="btn-box">
-        <button @click="deleteChosenCategory(category._id)">Delete</button>
+        <button @click="deleteChosenSlider(slider._id)">Delete</button>
         <button @click="$emit('close')">Cancel</button>
       </div>
     </Modal>
   </div>
-  <!-- Category Create Modal End -->
+  <!-- Slider Create Modal End -->
 </template>
 
 <script>
@@ -18,18 +18,18 @@ import Modal from '../AllModals.vue';
 
 export default {
   props: {
-    category: {
+    slider: {
       type: Object,
       required: true,
     },
   },
   components: { Modal },
   methods: {
-    ...mapActions('Categories', ['deleteCategory']),
-    /* Delete Category */
-    deleteChosenCategory(id) {
-      this.deleteCategory(id);
-      this.$emit('done', 'Deleted-category.');
+    ...mapActions('Categories', ['deleteSlider']),
+    /* Delete Slider */
+    deleteChosenSlider(id) {
+      this.deleteSlider(id);
+      this.$emit('done', 'Deleted-Slider.');
     },
   },
 };

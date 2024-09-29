@@ -20,9 +20,9 @@ export default {
                 state.error = data.message;
                 return;
             }
-            state.token = data.user.token;
-            localStorage.setItem("TOKEN", data.user.token);
-            localStorage.setItem("ID", data.user.id);
+            state.token = data.token;
+            localStorage.setItem("TOKEN", data.token);
+            localStorage.setItem("ID", data.data.data._id);
             state.error = null;
         },
 
@@ -37,19 +37,19 @@ export default {
     actions: {
         /* Register New Account */
         register: async({ commit }, userData) => {
-            let { data } = await axios.post('https://nooneuse.shop/api/auth/admin/register', userData);
+            let { data } = await axios.post('http://127.0.0.1:3000/api/auth/register', userData);
             commit("setMyData", data);
         },
 
         /* Login Account */
         login: async({ commit }, userData) => {
-            let { data } = await axios.post('https://nooneuse.shop/api/auth/login', userData);
+            let { data } = await axios.post('http://127.0.0.1:3000/api/auth/login', userData);
             commit("setMyData", data);
         },
 
         /* Logout Account */
         logout: async({ commit }) => {
-            await axios.get('https://nooneuse.shop/api/auth/logout');
+            await axios.get('http://127.0.0.1:3000/api/auth/logout');
             commit('cleanMyData');
         },
     }
